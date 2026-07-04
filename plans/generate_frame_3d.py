@@ -71,9 +71,50 @@ def connect_solidworks():
     return app
 
 
+def find_part_template(app):
+    """Cherche le template Part.prtdot dans les emplacements SolidWorks."""
+    import glob, os
+
+    # 1. Préférence utilisateur
+    t = app.GetUserPreferenceStringValue(9)
+    if t and os.path.isfile(t):
+        return t
+
+    # 2. Recherche dans ProgramData et Program Files
+    patterns = [
+        r"C:\ProgramData\SolidWorks\**\Part.prtdot",
+        r"C:\Program Files\SOLIDWORKS Corp\**\part.prtdot",
+        r"C:\Program Files\SOLIDWORKS Corp\**\Part.prtdot",
+        r"C:\Program Files\SolidWorks Corp\**\Part.prtdot",
+    ]
+    for pat in patterns:
+        hits = glob.glob(pat, recursive=True)
+        if hits:
+            return hits[0]
+
+    # 3. Demande à l'API le dossier de templates
+    folder = app.GetUserPreferenceStringValue(15)  # swDefaultTemplateLocation
+    if folder:
+        for name in ("Part.prtdot", "part.prtdot"):
+            p = os.path.join(folder, name)
+            if os.path.isfile(p):
+                return p
+
+    raise RuntimeError(
+        "Template Part.prtdot introuvable.\n"
+        "Dans SolidWorks : Options > Emplacements des fichiers > Modèles de documents\n"
+        "Copiez le chemin affiché et passez-le en argument : python generate_frame_3d.py <chemin>"
+    )
+
+
 def new_part(app):
     """Crée un nouveau document Part."""
-    template = app.GetUserPreferenceStringValue(9)  # Chemin template part
+    if len(sys.argv) > 1:
+        template = sys.argv[1]   # chemin passé en argument
+    else:
+        template = find_part_template(app)
+
+    print(f"    Template : {template}")
     doc = app.NewDocument(template, 0, 0, 0)
     if doc is None:
         raise RuntimeError("Impossible de créer un nouveau document Part.")
@@ -91,11 +132,72 @@ def draw_line(sk, x1, y1, z1, x2, y2, z2):
 #  GÉNÉRATION DU SQUELETTE 3D
 # ══════════════════════════════════════════════════════════════════
 
-def build_skeleton(doc):
+def open_3d_sketch(swDoc):
+    """Ouvre un nouveau sketch 3D — essaie plusieurs méthodes selon version SW."""
+    print("    Étape 1 : Insert3DSketch2(False)...")
+    try:
+        swDoc.Insert3DSketch2(False)
+        print("    → OK")
+        return
+    except TypeError as e:
+        print(f"    → TypeError: {e}")
+
+    print("    Étape 2 : Insert3DSketch2() sans argument...")
+    try:
+        swDoc.Insert3DSketch2()
+        print("    → OK")
+        return
+    except Exception as e:
+        print(f"    → Échec: {e}")
+
+    print("    Étape 3 : Insert3DSketch()...")
+    try:
+        swDoc.Insert3DSketch()
+        print("    → OK")
+        return
+    except Exception as e:
+        print(f"    → Échec: {e}")
+
+    raise RuntimeError(
+        "Impossible d'ouvrir un sketch 3D via Python.\n"
+        "Utilisez le macro VBA : plans/fauteuil_frame.swb\n"
+        "Dans SolidWorks : Outils > Macro > Exécuter"
+    )
+
+
+def close_sketch_and_rebuild(swDoc):
+    """Ferme le sketch actif et reconstruit le modèle."""
+    for method in ["InsertSketch", "Insert3DSketch"]:
+        try:
+            getattr(swDoc, method)()
+            break
+        except Exception:
+            pass
+
+    for method in ["EditRebuild3", "ForceRebuild3", "EditRebuild"]:
+        try:
+            fn = getattr(swDoc, method)
+            fn(False) if method == "ForceRebuild3" else fn()
+            break
+        except Exception:
+            pass
+
+
+def build_skeleton(app):
     """Trace tous les axes centraux des tubes dans un sketch 3D."""
 
-    doc.Insert3DSketch2(True)        # Ouvre le sketch 3D
-    sk = doc.SketchManager
+    # Utiliser ActiveDoc pour un dispatch plus fiable que le retour de NewDocument
+    swDoc = app.ActiveDoc
+    if swDoc is None:
+        raise RuntimeError("Aucun document actif dans SolidWorks.")
+
+    open_3d_sketch(swDoc)
+
+    sk = swDoc.SketchManager
+    if sk is None:
+        raise RuntimeError("SketchManager non disponible.")
+
+    print("    Tracé des axes de tubes...")
 
     # ── Cadres latéraux gauche et droit ─────────────────────────
     for x in (X_L, X_R):
@@ -126,29 +228,15 @@ def build_skeleton(doc):
 
     # ── Traverses (connexions gauche ↔ droite) ──────────────────
 
-    # T1 — Traverse basse arrière (au niveau axle roue arrière)
-    draw_line(sk, X_L, Y_REAR,    H_AXLE_REAR,  X_R, Y_REAR,    H_AXLE_REAR)
+    draw_line(sk, X_L, Y_REAR,     H_AXLE_REAR,  X_R, Y_REAR,     H_AXLE_REAR)   # T1 basse arr
+    draw_line(sk, X_L, Y_FRONT,    H_AXLE_FRONT, X_R, Y_FRONT,    H_AXLE_FRONT)  # T2 basse av
+    draw_line(sk, X_L, Y_REAR,     HS,           X_R, Y_REAR,     HS)             # T3 siège arr
+    draw_line(sk, X_L, Y_FRONT,    HS,           X_R, Y_FRONT,    HS)             # T4 siège av
+    draw_line(sk, X_L, Y_HANDLE,   HH,           X_R, Y_HANDLE,   HH)             # T5 poignée
+    draw_line(sk, X_L, Y_FOOTREST, H_FOOTREST,   X_R, Y_FOOTREST, H_FOOTREST)    # T6 repose-pieds
+    draw_line(sk, X_L, Y_ARM_FRONT, H_ARMREST,   X_R, Y_ARM_FRONT, H_ARMREST)    # T7 accoudoir
 
-    # T2 — Traverse basse avant (au niveau axle roue avant)
-    draw_line(sk, X_L, Y_FRONT,   H_AXLE_FRONT, X_R, Y_FRONT,   H_AXLE_FRONT)
-
-    # T3 — Traverse siège arrière
-    draw_line(sk, X_L, Y_REAR,    HS,            X_R, Y_REAR,    HS)
-
-    # T4 — Traverse siège avant
-    draw_line(sk, X_L, Y_FRONT,   HS,            X_R, Y_FRONT,   HS)
-
-    # T5 — Traverse poignée
-    draw_line(sk, X_L, Y_HANDLE,  HH,            X_R, Y_HANDLE,  HH)
-
-    # T6 — Traverse repose-pieds
-    draw_line(sk, X_L, Y_FOOTREST, H_FOOTREST,   X_R, Y_FOOTREST, H_FOOTREST)
-
-    # T7 — Traverse accoudoir avant (optionnelle — maintien latéral)
-    draw_line(sk, X_L, Y_ARM_FRONT, H_ARMREST,   X_R, Y_ARM_FRONT, H_ARMREST)
-
-    doc.Insert3DSketch2(False)      # Ferme le sketch 3D
-    doc.EditRebuild3()
+    close_sketch_and_rebuild(swDoc)
     print("[OK] Sketch 3D généré — tous les axes de tubes tracés.")
 
 
@@ -183,8 +271,8 @@ def print_summary():
 if __name__ == "__main__":
     try:
         app  = connect_solidworks()
-        doc  = new_part(app)
-        build_skeleton(doc)
+        new_part(app)           # crée le document — utilise app.ActiveDoc ensuite
+        build_skeleton(app)     # passe app pour accéder à ActiveDoc
         print_summary()
     except Exception as e:
         print(f"\n[ERREUR] {e}")
