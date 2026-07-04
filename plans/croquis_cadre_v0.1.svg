@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 700" width="820" height="700">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <polygon points="0,0 7,3.5 0,7" fill="#b00"/>
+    </marker>
+    <marker id="b" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="7,0 0,3.5 7,7" fill="#b00"/>
+    </marker>
+  </defs>
+
+  <!-- fond -->
+  <rect width="820" height="700" fill="#f8f7f2"/>
+
+  <!-- ══ TITRE ══ -->
+  <text x="410" y="30" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#111" letter-spacing="1.5">FAUTEUIL DE TRANSFERT — VUE DE CÔTÉ</text>
+  <text x="410" y="48" text-anchor="middle" font-family="monospace" font-size="10" fill="#666">Tube acier 30×30×2 mm · Open Lab · ENP Alger · v0.1</text>
+  <line x1="40" y1="56" x2="780" y2="56" stroke="#111" stroke-width="1"/>
+
+  <!-- ══ CADRE LATÉRAL (vue de côté) ══
+       Axe horizontal = Y (profondeur, →avant)
+       Axe vertical   = Z (hauteur, ↑)
+       Échelle : 1 mm = 0.56 px
+       Origine écran : (200, 610) = point A (Y=0, Z=0)
+  -->
+
+  <!-- Sol (tirets) -->
+  <line x1="100" y1="610" x2="640" y2="610" stroke="#aaa" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="645" y="614" font-family="monospace" font-size="10" fill="#999">sol</text>
+
+  <!-- A→B : pied arrière  (Y=0, Z=0→500) -->
+  <line x1="200" y1="610" x2="200" y2="330" stroke="#111" stroke-width="3"/>
+
+  <!-- B→C : rail de siège (Y=0→420, Z=500) -->
+  <line x1="200" y1="330" x2="435" y2="330" stroke="#111" stroke-width="3"/>
+
+  <!-- C→D : pied avant    (Y=420, Z=500→0) -->
+  <line x1="435" y1="330" x2="435" y2="610" stroke="#111" stroke-width="3"/>
+
+  <!-- B→E : dossier + poignée (Y=0→-50, Z=500→950) -->
+  <line x1="200" y1="330" x2="172" y2="78" stroke="#111" stroke-width="3"/>
+
+  <!-- F→G : accoudoir     (Y=20→370, Z=730) -->
+  <line x1="211" y1="201" x2="407" y2="201" stroke="#111" stroke-width="2.5"/>
+
+  <!-- B→F : support accoudoir arrière (quasi vertical) -->
+  <line x1="200" y1="330" x2="211" y2="201" stroke="#111" stroke-width="1.8" stroke-dasharray="none"/>
+
+  <!-- Gsup→G : support accoudoir avant (vertical, depuis rail) -->
+  <line x1="407" y1="330" x2="407" y2="201" stroke="#111" stroke-width="1.8"/>
+
+  <!-- Repose-pieds support -->
+  <line x1="435" y1="568" x2="491" y2="565" stroke="#111" stroke-width="1.8"/>
+
+  <!-- ══ POINTS ══ -->
+  <circle cx="200" cy="610" r="4" fill="#111"/>
+  <circle cx="200" cy="330" r="4" fill="#111"/>
+  <circle cx="435" cy="330" r="4" fill="#111"/>
+  <circle cx="435" cy="610" r="4" fill="#111"/>
+  <circle cx="172" cy="78"  r="4" fill="#d4a017"/>
+  <circle cx="211" cy="201" r="3" fill="#111"/>
+  <circle cx="407" cy="201" r="3" fill="#111"/>
+  <circle cx="491" cy="565" r="3" fill="#111"/>
+
+  <!-- Étiquettes points -->
+  <text x="182" y="628" font-family="monospace" font-size="11" fill="#333">A</text>
+  <text x="182" y="325" font-family="monospace" font-size="11" fill="#333">B</text>
+  <text x="440" y="325" font-family="monospace" font-size="11" fill="#333">C</text>
+  <text x="440" y="628" font-family="monospace" font-size="11" fill="#333">D</text>
+  <text x="154" y="75"  font-family="monospace" font-size="11" fill="#c8820a">E</text>
+  <text x="193" y="196" font-family="monospace" font-size="11" fill="#333">F</text>
+  <text x="412" y="196" font-family="monospace" font-size="11" fill="#333">G</text>
+
+  <!-- ══ COTES VERTICALES (gauche) ══ -->
+
+  <!-- | 500 mm | siège -->
+  <line x1="200" y1="610" x2="155" y2="610" stroke="#b00" stroke-width="0.8"/>
+  <line x1="200" y1="330" x2="155" y2="330" stroke="#b00" stroke-width="0.8"/>
+  <line x1="163" y1="330" x2="163" y2="610" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="150" y="475" font-family="monospace" font-size="11" fill="#b00" text-anchor="middle" transform="rotate(-90,150,475)">500 mm</text>
+
+  <!-- | 730 mm | accoudoir -->
+  <line x1="200" y1="201" x2="130" y2="201" stroke="#b00" stroke-width="0.8"/>
+  <line x1="138" y1="201" x2="138" y2="610" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="125" y="415" font-family="monospace" font-size="11" fill="#b00" text-anchor="middle" transform="rotate(-90,125,415)">730 mm</text>
+
+  <!-- | 950 mm | poignée -->
+  <line x1="172" y1="78"  x2="100" y2="78"  stroke="#b00" stroke-width="0.8"/>
+  <line x1="200" y1="610" x2="100" y2="610" stroke="#b00" stroke-width="0.8"/>
+  <line x1="108" y1="78"  x2="108" y2="610" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="95" y="350" font-family="monospace" font-size="11" fill="#b00" text-anchor="middle" transform="rotate(-90,95,350)">950 mm</text>
+
+  <!-- ══ COTES HORIZONTALES (bas) ══ -->
+
+  <!-- |←— 420 mm —→| profondeur siège -->
+  <line x1="200" y1="635" x2="200" y2="650" stroke="#b00" stroke-width="0.8"/>
+  <line x1="435" y1="635" x2="435" y2="650" stroke="#b00" stroke-width="0.8"/>
+  <line x1="200" y1="644" x2="435" y2="644" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="317" y="663" font-family="monospace" font-size="11" fill="#b00" text-anchor="middle">420 mm</text>
+
+  <!-- |←50→| recul poignée -->
+  <line x1="172" y1="66" x2="200" y2="66" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="186" y="60" font-family="monospace" font-size="10" fill="#b00" text-anchor="middle">50</text>
+
+  <!-- |←— 350 mm —→| accoudoir -->
+  <line x1="211" y1="183" x2="407" y2="183" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="309" y="178" font-family="monospace" font-size="10" fill="#b00" text-anchor="middle">350 mm</text>
+
+  <!-- repose-pieds +100mm -->
+  <line x1="491" y1="635" x2="491" y2="650" stroke="#b00" stroke-width="0.8"/>
+  <line x1="435" y1="644" x2="491" y2="644" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="463" y="663" font-family="monospace" font-size="10" fill="#b00" text-anchor="middle">+100</text>
+
+  <!-- ══ LÉGENDE POINTS ══ -->
+  <rect x="545" y="90" width="225" height="280" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="557" y="113" font-family="monospace" font-size="11" font-weight="bold" fill="#111">COORDONNÉES (Y, Z) en mm</text>
+  <line x1="555" y1="120" x2="762" y2="120" stroke="#ddd" stroke-width="1"/>
+
+  <text x="557" y="140" font-family="monospace" font-size="11" fill="#333">A   Y=0    Z=0</text>
+  <text x="557" y="158" font-family="monospace" font-size="11" fill="#333">B   Y=0    Z=500</text>
+  <text x="557" y="176" font-family="monospace" font-size="11" fill="#333">C   Y=420  Z=500</text>
+  <text x="557" y="194" font-family="monospace" font-size="11" fill="#333">D   Y=420  Z=0</text>
+  <text x="557" y="212" font-family="monospace" font-size="11" fill="#c8820a">E   Y=-50  Z=950</text>
+  <text x="557" y="230" font-family="monospace" font-size="11" fill="#333">F   Y=20   Z=730</text>
+  <text x="557" y="248" font-family="monospace" font-size="11" fill="#333">G   Y=370  Z=730</text>
+  <line x1="555" y1="258" x2="762" y2="258" stroke="#ddd" stroke-width="1"/>
+  <text x="557" y="276" font-family="monospace" font-size="11" fill="#555">LIGNES :</text>
+  <text x="557" y="294" font-family="monospace" font-size="10" fill="#555">A→B  B→C  C→D</text>
+  <text x="557" y="310" font-family="monospace" font-size="10" fill="#555">B→E  F→G  B→F</text>
+  <text x="557" y="326" font-family="monospace" font-size="10" fill="#555">G(Y=370,Z=500)→G  RF</text>
+  <line x1="555" y1="334" x2="762" y2="334" stroke="#ddd" stroke-width="1"/>
+  <text x="557" y="352" font-family="monospace" font-size="10" fill="#888">X = -310 cadre gauche</text>
+  <text x="557" y="368" font-family="monospace" font-size="10" fill="#888">X = +310 cadre droit</text>
+
+  <!-- ══ VUE DE FACE (mini) ══ -->
+  <rect x="545" y="400" width="225" height="210" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="557" y="420" font-family="monospace" font-size="11" font-weight="bold" fill="#111">VUE DE FACE (largeur)</text>
+  <line x1="555" y1="427" x2="762" y2="427" stroke="#ddd" stroke-width="1"/>
+
+  <!-- mini front view — X horizontal, Z vertical -->
+  <!-- scale 0.22, origin at (660, 590) -->
+  <!-- left frame X=-310 → x=660-68=592, right X=310 → x=660+68=728 -->
+  <!-- Z=0→y=590, Z=500→y=480, Z=730→y=430, Z=950→y=381 -->
+
+  <line x1="592" y1="590" x2="592" y2="480" stroke="#111" stroke-width="2"/>  <!-- leg L -->
+  <line x1="728" y1="590" x2="728" y2="480" stroke="#111" stroke-width="2"/>  <!-- leg R -->
+  <line x1="592" y1="480" x2="728" y2="480" stroke="#111" stroke-width="2"/>  <!-- siège -->
+  <line x1="592" y1="430" x2="728" y2="430" stroke="#111" stroke-width="1.5"/><!-- accoudoir -->
+  <line x1="592" y1="381" x2="728" y2="381" stroke="#111" stroke-width="1.5"/><!-- poignée -->
+  <!-- dossiers -->
+  <line x1="592" y1="480" x2="586" y2="381" stroke="#111" stroke-width="2"/>
+  <line x1="728" y1="480" x2="734" y2="381" stroke="#111" stroke-width="2"/>
+  <!-- sol -->
+  <line x1="565" y1="590" x2="755" y2="590" stroke="#aaa" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- cote largeur 620mm -->
+  <line x1="592" y1="604" x2="728" y2="604" stroke="#b00" stroke-width="0.8" marker-start="url(#b)" marker-end="url(#a)"/>
+  <text x="660" y="618" font-family="monospace" font-size="10" fill="#b00" text-anchor="middle">620 mm</text>
+
+  <!-- labels X -->
+  <text x="582" y="598" font-family="monospace" font-size="9" fill="#666" text-anchor="middle">-310</text>
+  <text x="738" y="598" font-family="monospace" font-size="9" fill="#666" text-anchor="middle">+310</text>
+</svg>
