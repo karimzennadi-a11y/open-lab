@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620">
+  <rect width="800" height="620" fill="#f8f7f2"/>
+
+  <!-- TITRE -->
+  <text x="400" y="28" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#111">ÉLÉMENTS MANQUANTS — VUE ISOMÉTRIQUE</text>
+  <line x1="40" y1="38" x2="760" y2="38" stroke="#111" stroke-width="1"/>
+
+  <!-- LÉGENDE -->
+  <rect x="590" y="50" width="190" height="90" fill="white" stroke="#ccc" stroke-width="1"/>
+  <line x1="603" y1="70" x2="635" y2="70" stroke="#666" stroke-width="3"/>
+  <text x="642" y="74" font-family="monospace" font-size="11" fill="#555">Déjà fait</text>
+  <line x1="603" y1="92" x2="635" y2="92" stroke="#c00" stroke-width="2.5" stroke-dasharray="7,3"/>
+  <text x="642" y="96" font-family="monospace" font-size="11" fill="#c00">À ajouter</text>
+  <line x1="603" y1="114" x2="635" y2="114" stroke="#d07000" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="642" y="118" font-family="monospace" font-size="11" fill="#d07000">Optionnel v1</text>
+
+  <!--
+    Projection oblique : cx=415, cy=470, scale
+    screen_x = cx + X*0.35 - Y*0.217
+    screen_y = cy - Z*0.35 + Y*0.125
+
+    Cadre gauche X=-310 :  A_L(322,470) B_L(322,297) C_L(231,358) D_L(231,533)
+                           E_L(333,144) F_L(318,228) G_L(242,271)
+    Cadre droit  X=+310 :  A_R(539,470) B_R(539,297) C_R(448,358) D_R(448,533)
+                           E_R(550,144) F_R(535,228) G_R(459,271)
+  -->
+
+  <!-- ═══ DÉJÀ MODÉLISÉ (gris) ═══ -->
+
+  <!-- Cadre gauche : pied arr + rail siège + pied avant -->
+  <line x1="322" y1="470" x2="322" y2="297" stroke="#666" stroke-width="3.5"/>
+  <line x1="322" y1="297" x2="231" y2="358" stroke="#666" stroke-width="3.5"/>
+  <line x1="231" y1="358" x2="231" y2="533" stroke="#666" stroke-width="3.5"/>
+
+  <!-- Cadre droit : pied arr + rail siège + pied avant -->
+  <line x1="539" y1="470" x2="539" y2="297" stroke="#666" stroke-width="3.5"/>
+  <line x1="539" y1="297" x2="448" y2="358" stroke="#666" stroke-width="3.5"/>
+  <line x1="448" y1="358" x2="448" y2="533" stroke="#666" stroke-width="3.5"/>
+
+  <!-- T1 : basse arrière Y=0, Z=100 -->
+  <line x1="322" y1="435" x2="539" y2="435" stroke="#666" stroke-width="2.5"/>
+
+  <!-- T2 : basse avant Y=420, Z=75 -->
+  <line x1="231" y1="506" x2="448" y2="506" stroke="#666" stroke-width="2.5"/>
+
+  <!-- T3 : siège arrière B_L→B_R -->
+  <line x1="322" y1="297" x2="539" y2="297" stroke="#666" stroke-width="2.5"/>
+
+  <!-- T4 : siège avant C_L→C_R -->
+  <line x1="231" y1="358" x2="448" y2="358" stroke="#666" stroke-width="2.5"/>
+
+  <!-- Sol (tirets) -->
+  <line x1="160" y1="540" x2="610" y2="540" stroke="#bbb" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="618" y="544" font-family="monospace" font-size="10" fill="#aaa">sol</text>
+
+  <!-- ═══ À AJOUTER (rouge, tirets) ═══ -->
+
+  <!-- ① Dossier gauche B_L→E_L -->
+  <line x1="322" y1="297" x2="333" y2="144" stroke="#c00" stroke-width="3" stroke-dasharray="8,4"/>
+  <!-- ① Dossier droit B_R→E_R -->
+  <line x1="539" y1="297" x2="550" y2="144" stroke="#c00" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- ② T5 traverse poignée E_L→E_R -->
+  <line x1="333" y1="144" x2="550" y2="144" stroke="#c00" stroke-width="3" stroke-dasharray="8,4"/>
+
+  <!-- ③ Accoudoir gauche F_L→G_L -->
+  <line x1="318" y1="228" x2="242" y2="271" stroke="#c00" stroke-width="2.5" stroke-dasharray="7,3"/>
+  <!-- ③ Accoudoir droit F_R→G_R -->
+  <line x1="535" y1="228" x2="459" y2="271" stroke="#c00" stroke-width="2.5" stroke-dasharray="7,3"/>
+
+  <!-- Support accoudoir arrière gauche B_L→F_L -->
+  <line x1="322" y1="297" x2="318" y2="228" stroke="#c00" stroke-width="2" stroke-dasharray="5,3"/>
+  <!-- Support accoudoir arrière droit B_R→F_R -->
+  <line x1="539" y1="297" x2="535" y2="228" stroke="#c00" stroke-width="2" stroke-dasharray="5,3"/>
+  <!-- Support accoudoir avant gauche (Y=370,Z=500,L)→G_L -->
+  <line x1="242" y1="351" x2="242" y2="271" stroke="#c00" stroke-width="2" stroke-dasharray="5,3"/>
+  <!-- Support accoudoir avant droit (Y=370,Z=500,R)→G_R -->
+  <line x1="459" y1="351" x2="459" y2="271" stroke="#c00" stroke-width="2" stroke-dasharray="5,3"/>
+
+  <!-- ④ T7 traverse accoudoir G_L→G_R -->
+  <line x1="242" y1="271" x2="459" y2="271" stroke="#c00" stroke-width="2.5" stroke-dasharray="7,3"/>
+
+  <!-- ═══ OPTIONNEL (orange, tirets fins) ═══ -->
+
+  <!-- ⑤ Support repose-pieds gauche -->
+  <line x1="231" y1="506" x2="209" y2="517" stroke="#d07000" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- ⑤ Support repose-pieds droit -->
+  <line x1="448" y1="506" x2="426" y2="517" stroke="#d07000" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- ⑤ T6 traverse repose-pieds -->
+  <line x1="209" y1="517" x2="426" y2="517" stroke="#d07000" stroke-width="2" stroke-dasharray="4,3"/>
+
+  <!-- ═══ POINTS CLÉS ═══ -->
+  <!-- Existants -->
+  <circle cx="322" cy="470" r="3.5" fill="#666"/>
+  <circle cx="322" cy="297" r="3.5" fill="#666"/>
+  <circle cx="231" cy="358" r="3.5" fill="#666"/>
+  <circle cx="231" cy="533" r="3.5" fill="#666"/>
+  <circle cx="539" cy="470" r="3.5" fill="#666"/>
+  <circle cx="539" cy="297" r="3.5" fill="#666"/>
+  <circle cx="448" cy="358" r="3.5" fill="#666"/>
+  <circle cx="448" cy="533" r="3.5" fill="#666"/>
+  <!-- Manquants -->
+  <circle cx="333" cy="144" r="4" fill="#c00"/>
+  <circle cx="550" cy="144" r="4" fill="#c00"/>
+  <circle cx="318" cy="228" r="3.5" fill="#c00"/>
+  <circle cx="535" cy="228" r="3.5" fill="#c00"/>
+  <circle cx="242" cy="271" r="3.5" fill="#c00"/>
+  <circle cx="459" cy="271" r="3.5" fill="#c00"/>
+
+  <!-- ═══ ÉTIQUETTES ═══ -->
+  <!-- Dossier -->
+  <text x="290" y="205" font-family="monospace" font-size="11" fill="#c00" font-weight="bold">① dossier G</text>
+  <text x="553" y="205" font-family="monospace" font-size="11" fill="#c00" font-weight="bold">① dossier D</text>
+  <!-- Poignée -->
+  <text x="395" y="134" font-family="monospace" font-size="11" fill="#c00" font-weight="bold" text-anchor="middle">② traverse poignée  Z=950</text>
+  <!-- Points poignée -->
+  <text x="315" y="140" font-family="monospace" font-size="10" fill="#c00">E_G</text>
+  <text x="553" y="140" font-family="monospace" font-size="10" fill="#c00">E_D</text>
+  <!-- Accoudoir -->
+  <text x="248" y="255" font-family="monospace" font-size="10" fill="#c00">③ acc G</text>
+  <text x="463" y="258" font-family="monospace" font-size="10" fill="#c00">③ acc D</text>
+  <text x="340" y="263" font-family="monospace" font-size="10" fill="#c00">④ T7 traverse acc  Z=730</text>
+  <!-- Repose-pieds -->
+  <text x="175" y="532" font-family="monospace" font-size="10" fill="#d07000">⑤ repose-pieds</text>
+
+  <!-- ═══ RÉCAP LIGNES À TRACER ═══ -->
+  <line x1="40" y1="554" x2="760" y2="554" stroke="#ccc" stroke-width="1"/>
+  <text x="50" y="572" font-family="monospace" font-size="11" fill="#c00">① B→E  gauche : (X=-310, Y=0, Z=500) → (X=-310, Y=-50, Z=950)   |  droit : même, X=+310</text>
+  <text x="50" y="589" font-family="monospace" font-size="11" fill="#c00">② T5   : (X=-310, Y=-50, Z=950) → (X=+310, Y=-50, Z=950)</text>
+  <text x="50" y="606" font-family="monospace" font-size="11" fill="#c00">③④ acc : F(Y=20,Z=730)→G(Y=370,Z=730)  +  supports  +  T7 traverse acc</text>
+</svg>
